@@ -12,7 +12,10 @@
 
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
-\title {
+\SetKwProg{CustomAlgorithm}{Algorithm}{}{}
+\SetKwFunction{EvolutionaryAlgorithm}{EvolutionaryAlgorithm}
+
+\title{
     {
         \huge Dokumentacja wstępna
     } \\
@@ -34,11 +37,177 @@
     \newpage
 
     \section{
-        Test section
+        Opis zadania
+    }
+    W ramach naszego projektu mamy za zadanie pomóc świętemu Mikołajowi zoptymalizować sposób załadunku sań i 
+    drogę jaką musi pokonać z prezentami z bieguna północnego, na którym znajdują się prezenty.
+
+    \section{
+        Dane
     }
         \subsection{
-            Test subsection
+            Analiza danych
         }
-            Test description
+            Dostarczone dane dla zadania składają się z listy prezentów. Prezenty identyfikowane są poprzez 
+            \begin{itemize}
+                \item identyfikator prezentu
+                \item wagę prezentu
+                \item długość i szerokość geograficzną
+            \end{itemize}    
+
+            Na podstawie danych można oszacować, że ilość sań w pesymistycznym przypadku może wynosić tyle ile jest prezentów.
+
+        \subsection{
+            Wybór danych
+        }
+            Ze względu na ograniczenia sprzętowe nie będzie możliwe przetworzenie pełnego zbioru danych, 
+            dlatego dokonaniliśmy podpróbkowania zbioru oryginalnego, w efekcie czego powstały trzy pliki zawierającego dane:
+            \begin{itemize}
+                \item gifts25000.csv - zawierający 25 tysięcy prezentów (25\% wszystkich danych)
+                \item gifts10000.csv - zawierający 10 tysięcy prezentów (10\% wszystkich danych)
+                \item gifts1000.csv - zawierający 1 tysiąc prezentów (1\% wszystkich danych)
+            \end{itemize} 
+
+            Najmniejszy zbiór zostanie wykorzystany w głównej mierze do badania poprawności implementacji
+
+    \section{
+        Wstępna propozycja rozwiązania
+    }
+        \subsection{
+            Metoda
+        }
+            Proponowaną wstępną metodą rozwiązania zadania jest wykorzystanie algorytmu ewolucyjnego
+            do znalezienia rozwiązania z różnymi implementacjami i parametrami funkcji selekcji, 
+            mutacji i sukcesji.
+
+            \begin{algorithm}[H]
+                \CustomAlgorithm{\EvolutionaryAlgorithm{
+                    GeneratePopulation,
+                    Evaluation,
+                    Selection,
+                    Mutation,
+                    Succession,
+                    SelectionParameters,
+                    MutationParameters,
+                    SuccessionParameters,
+                    PopulationSize,
+                    Iterations
+                }} {
+
+                    $P \gets GeneratePopulation(PopulationSize)$
+
+                    $t \gets 0$
+
+                    $H \gets P^0$
+
+                    \While{$t < Iterations$}{
+                        \For{
+                            $i \in$ $1:PopulationSize$
+                        }{
+                            $O^{t}_{i} \gets Mutation(Selection(P^t, SelectionParameters), MutationParameters)$
+                        }
+
+                        $P^{t} \gets  Succession(O^{t}, SuccessionParameters)$
+
+                        $H \gets H \cup P^{t}$
+
+                        $t \gets t + 1$
+                    }
+                }
+            \end{algorithm}
+
+            Dla algorytmu osobnikiem jest zbiór sań, które przechowują informacje o tym, 
+            jakie prezenty w jakich kolejnościach odwiedzają. Będzie więc to macierz trójwymiarowa, 
+            gdzie wymiarami odpowiednio jest lista sań, lista prezentów, pozycja prezentu w saniach. 
+            Z uwagi na ograniczone zasoby sprzętowe osobnik zostanie zaimplementowany jako wektor sań, 
+            a każde sanie jako macierz rzadka przechowująca pary postaci $(nr_prezentu, kolejnosc)$.
+
+        \subsection{
+            Warianty rozwiązania
+        }
+            \subsubsection{
+                Wariant I: Zamiana dowolnych prezentów między dowolnymi saniami
+            }
+                \begin{itemize}
+                    \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
+                    \item Mutacja - mutacja będzie polegała na wybraniu pary sań i wymianie losowego prezentu z jednych sań i wstanie na losową pozycję do drugich sań
+                    \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
+                    \item Parametry: prawdopodobieństwo mutacji
+                \end{itemize}
+
+            \subsubsection{
+                Wariant II: Zamiana prezentów na ostatnich pozycjach w saniach + zamiana prezentów w saniach
+            }
+                Metoda będzie składała się z dwóch części: \\
+
+                W pierwszej nastąpi rozłożenie prezentów między saniami:
+                \begin{itemize}
+                    \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
+                    \item Mutacja - mutacja będzie polegała na wybraniu pary sań i transferze ostatniego prezentu z jednych sań do drugich sań
+                    \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
+                    \item Parametry: prawdopodobieństwo mutacji
+                \end{itemize}
+
+                \noindent W drugiej nastąpi optymalizacja ułożenia prezentów w obrębie sań:
+                \begin{itemize}
+                    \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
+                    \item Mutacja - mutacja będzie polegała na losowej zamianie prezentów w każdych saniach
+                    \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
+                    \item Parametry: prawdopodobieństwo mutacji 
+                \end{itemize}
+
+            \subsubsection{
+                Generowanie populacji
+            }
+                Sprawdzone zostanie jaki wpływ na rozwiązanie ma wygenerowana populacja startowa. 
+                Poddane eksperymentom zostaną 3 scenariusze losowania populacji dla przedstawionych wariantów rozwiązania
+
+                \begin{itemize}
+                    \item Jednostajne rozłożenie prezentów - prezenty zostaną losowo (z rozkładem jednostajnym) rozłożone między saniami
+                    \item Równomierne rozłożenie prezentów - każde sanie będą miały dokładnie jeden prezent
+                    \item Gaussowskie rozłożenie prezentów - prezenty zostaną rozłożone między saniami z wykorzystaniem rozkładu normalnego
+                \end{itemize}
+
+        \subsection{
+            Funkcja celu
+        }
+            Celem zadania jest minimalizacja ważonego zużycia refinerów $WRW$ \textit{Weighted Reindeer Weariness}
+            dla wszystkich sań przypisanych do realizacji zadania transportu prezentów. \\ \\
+            Współczynnik $WRW$ dla sań zdefiniowany jest jako suma $dystans * waga sań$,
+            dla wszystkich pokonanych dystansów i przekłada się na matematyczne wyrażenie postaci:
+            \[
+                WRR_{s} = \sum^{g}_{i=1} [
+                    (
+                        \sum^{g}_{k=1} w_{k} - 
+                        \sum^{i}_{k=1} w_{k} + 10
+                    ) \cdot
+                    Dist(Loc_{i}, Loc_{i-1})
+                ]
+            \]
+            gdzie:
+            \[
+                \begin{array}{l}
+                    s - \mbox{sanie} \\
+                    g - \mbox{ilość prezentów w saniach} \\
+                    Dist - \mbox{funkcja dystansu między punktami (Formuła Haversine)} \\
+                    Loc_{i} - \mbox{lokalizacja i-tego prezentu z sań} \\
+                \end{array}
+            \]
+            \\
+
+            \noindent Funkcja celu zatem będzie miała postać
+            \[
+                q(X) = \sum_{x \in X} WRR_{x}
+            \]
+
+    \section{
+        Mierzenie jakości rozwiązań
+    }
+        Porównamy kilka wariantów rozwiązania na podstawie efektywności, niezawodności oraz jakości rozwiązania. 
+        Do określania jakości rozwiązania zostaną wykorzystane wykresy:
+        \begin{itemize}
+            \item krzywej zbieżności - reprezentując wartości funkcji celu wraz z ilością ewaluacji funkcji celu
+            \item krzywej ECDF - obrazującej, jak szybko ulega poprawie jakość rozwiązania dla każdego z wariantów
+        \end{itemize}
 
 \end{document}
