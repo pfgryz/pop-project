@@ -48,7 +48,7 @@
         \subsection{
             Analiza danych
         }
-            Dostarczone dane dla zadania składają się z listy prezentów. Prezenty identyfikowane są poprzez 
+            Dostarczone dane dla zadania składają się z listy prezentów. Prezenty identyfikowane są poprzez:
             \begin{itemize}
                 \item identyfikator prezentu
                 \item wagę prezentu
@@ -68,7 +68,7 @@
                 \item gifts1000.csv - zawierający 1 tysiąc prezentów (1\% wszystkich danych)
             \end{itemize} 
 
-            Najmniejszy zbiór zostanie wykorzystany w głównej mierze do badania poprawności implementacji
+            Najmniejszy zbiór zostanie wykorzystany w głównej mierze do badania poprawności implementacji.
 
     \section{
         Wstępna propozycja rozwiązania
@@ -118,9 +118,9 @@
 
             Dla algorytmu osobnikiem jest zbiór sań, które przechowują informacje o tym, 
             jakie prezenty w jakich kolejnościach odwiedzają. Będzie więc to macierz trójwymiarowa, 
-            gdzie wymiarami odpowiednio jest lista sań, lista prezentów, pozycja prezentu w saniach. 
+            gdzie wymiarami są odpowiednio: lista sań, lista prezentów oraz pozycja prezentu w saniach. 
             Z uwagi na ograniczone zasoby sprzętowe osobnik zostanie zaimplementowany jako wektor sań, 
-            a każde sanie jako macierz rzadka przechowująca pary postaci $(nr_prezentu, kolejnosc)$.
+            a każde sanie jako macierz rzadka przechowująca pary postaci $(nr_{prezentu}, kolejnosc)$.
 
         \subsection{
             Warianty rozwiązania
@@ -130,7 +130,7 @@
             }
                 \begin{itemize}
                     \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
-                    \item Mutacja - mutacja będzie polegała na wybraniu pary sań i wymianie losowego prezentu z jednych sań i wstanie na losową pozycję do drugich sań
+                    \item Mutacja - polegająca na wybraniu pary sań i wymianie losowego prezentu z jednych sań i wstawienie na losową pozycję do drugich sań
                     \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
                     \item Parametry: prawdopodobieństwo mutacji
                 \end{itemize}
@@ -140,10 +140,10 @@
             }
                 Metoda będzie składała się z dwóch części: \\
 
-                W pierwszej nastąpi rozłożenie prezentów między saniami:
+                \noindent W pierwszej nastąpi rozłożenie prezentów między saniami:
                 \begin{itemize}
                     \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
-                    \item Mutacja - mutacja będzie polegała na wybraniu pary sań i transferze ostatniego prezentu z jednych sań do drugich sań
+                    \item Mutacja - polegająca na wybraniu pary sań i transferze ostatniego prezentu z jednych sań do drugich sań
                     \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
                     \item Parametry: prawdopodobieństwo mutacji
                 \end{itemize}
@@ -151,7 +151,7 @@
                 \noindent W drugiej nastąpi optymalizacja ułożenia prezentów w obrębie sań:
                 \begin{itemize}
                     \item Selekcja - turniejowa z wielkością turnieju stałą, równą $2$
-                    \item Mutacja - mutacja będzie polegała na losowej zamianie prezentów w każdych saniach
+                    \item Mutacja - polegająca na losowej zamianie prezentów w obrębie wybranych losowo sań
                     \item Sukcesja - generacyjna z zapamiętaniem najlepszego osiągniętego wyniku
                     \item Parametry: prawdopodobieństwo mutacji 
                 \end{itemize}
@@ -160,7 +160,7 @@
                 Generowanie populacji
             }
                 Sprawdzone zostanie jaki wpływ na rozwiązanie ma wygenerowana populacja startowa. 
-                Poddane eksperymentom zostaną 3 scenariusze losowania populacji dla przedstawionych wariantów rozwiązania
+                Poddane eksperymentom zostaną 3 scenariusze losowania populacji dla przedstawionych wariantów rozwiązania:
 
                 \begin{itemize}
                     \item Jednostajne rozłożenie prezentów - prezenty zostaną losowo (z rozkładem jednostajnym) rozłożone między saniami
@@ -171,12 +171,12 @@
         \subsection{
             Funkcja celu
         }
-            Celem zadania jest minimalizacja ważonego zużycia refinerów $WRW$ \textit{Weighted Reindeer Weariness}
+            Celem zadania jest minimalizacja sumy ważonych zużyć reniferów $WRW$ \textit{Weighted Reindeer Weariness}
             dla wszystkich sań przypisanych do realizacji zadania transportu prezentów. \\ \\
-            Współczynnik $WRW$ dla sań zdefiniowany jest jako suma $dystans * waga sań$,
+            Współczynnik $WRW$ dla sań zdefiniowany jest jako suma $dystans * waga$,
             dla wszystkich pokonanych dystansów i przekłada się na matematyczne wyrażenie postaci:
             \[
-                WRR_{s} = \sum^{g}_{i=1} [
+                WRW_{s} = \sum^{g}_{i=1} [
                     (
                         \sum^{g}_{k=1} w_{k} - 
                         \sum^{i}_{k=1} w_{k} + 10
@@ -195,15 +195,15 @@
             \]
             \\
 
-            \noindent Funkcja celu zatem będzie miała postać
+            \noindent Funkcja celu zatem będzie miała postać:
             \[
-                q(X) = \sum_{x \in X} WRR_{x}
+                q(X) = \sum_{x \in X} WRW_{x}
             \]
 
     \section{
         Mierzenie jakości rozwiązań
     }
-        Porównamy kilka wariantów rozwiązania na podstawie efektywności, niezawodności oraz jakości rozwiązania. 
+        Zostanie porównane kilka wariantów rozwiązania na podstawie efektywności, niezawodności oraz jakości rozwiązania. 
         Do określania jakości rozwiązania zostaną wykorzystane wykresy:
         \begin{itemize}
             \item krzywej zbieżności - reprezentując wartości funkcji celu wraz z ilością ewaluacji funkcji celu
