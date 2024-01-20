@@ -1,5 +1,5 @@
 from src.helpers import Point, haversine
-from src.model import NorthPole
+from src.constants import NorthPole
 import pytest
 from pytest import approx
 

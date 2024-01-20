@@ -4,7 +4,7 @@ from pytest import approx
 from src.api.igift_manager import IGiftManager
 from src.criterion import weighted_reindeer_weariness, \
     cumulative_weighted_reindeer_weariness
-from src.model import Gift
+from src.constants import Gift
 
 
 class SimpleGiftManager(IGiftManager):

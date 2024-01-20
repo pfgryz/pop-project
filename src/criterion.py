@@ -1,6 +1,6 @@
 from typing import List
 
-from src.model import Sleigh, NorthPole, BaseWeight
+from src.constants import Sleigh, NorthPole, BaseWeight
 from src.helpers import haversine
 from src.api.igift_manager import IGiftManager
 
