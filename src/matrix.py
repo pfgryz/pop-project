@@ -16,12 +16,21 @@ class Matrix(Generic[T]):
         return len(self._content)
 
     def __getitem__(self, item: int):
-        return self._content[item]
+        return [element[1] for element in self._content][item]
 
     def add(self, value: T) -> 'Matrix':
         count = len(self._content)
         self._content.append((count, value))
         return self
+
+    def insert(self, position: int, value: T) -> 'Matrix':
+        if position == len(self):
+            return self.add(value)
+
+        self._content.insert(position, (position, value))
+        for index in range(position, len(self._content)):
+            _, value = self._content[index]
+            self._content[index] = (index, value)
 
     def remove(self, position: int) -> 'Matrix':
         if position >= len(self._content) or position < 0:

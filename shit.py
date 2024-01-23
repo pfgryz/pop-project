@@ -23,67 +23,6 @@ def get_data_from_csv_file(path):
             list_of_data.append(dictionary)
         return list_of_data
 
-
-def rating_function(population, rating_criterion_function):
-    return [rating_criterion_function(individual) for individual in population]
-
-
-def mutation_random_gift_into_random_position(population, probability):
-    # można, bo kolejność sań nie ma znaczenia
-    shuffle(population)
-    i = 0
-    while i < len(population):
-        if np.random.uniform() < probability:
-            if len(population[i]) == 0:
-                break
-            chosen_gift = choice(population[i])
-            population[i].remove(chosen_gift)
-            population[i] = fix_present_position(population[i])
-            if len(population[i + 1]) == 0:
-                population[i + 1].append(chosen_gift)
-            else:
-                place = len(population[i + 1]) - 1
-                population[i + 1].insert(place, chosen_gift)
-            population[i + 1] = fix_present_position(population[i + 1])
-        i += 2
-    return population
-
-
-# pewnie niepotrzebne bo źle zrozumiałam wariant drugi, ale jeśli się przyda to nazwa do zmiany
-def mutation_swap_and_run(population, probability):
-    new_population = mutation_move_last_gift(population, probability)
-    p = mutation_swap_random_gifts_in_sleigh(new_population, probability)
-    return p
-
-
-def mutation_move_last_gift(population, probability):
-    shuffle(population)
-    i = 0
-    while i < len(population):
-        if np.random.uniform() < probability:
-            if len(population[i]) == 0:
-                break
-            population[i + 1].append(population[i][-1])
-            population[i].remove(population[i][-1])
-            population[i + 1] = fix_present_position(population[i + 1])
-        i += 2
-    return population
-
-
-def mutation_swap_random_gifts_in_sleigh(population, probability):
-    for sleigh in population:
-        if np.random.uniform() < probability:
-            if len(sleigh) == 0 or len(sleigh) == 1:
-                break
-            first = randint(0, len(sleigh) - 1)
-            second = first
-            while first == second:
-                second = randint(0, len(sleigh) - 1)
-            sleigh[first], sleigh[second] = sleigh[second], sleigh[first]
-            sleigh = fix_present_position(sleigh)
-    return population
-
-
 def evolutionary_algorithm(generate_population, rating_function, evaluation,
                            selection, mutation,
                            selection_parameters_tournament_size,

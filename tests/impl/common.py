@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Tuple
 
-from src.constants import Gift
+from src.constants import Gift, Population, Individual
 from src.api.igift_manager import IGiftManager
+from src.matrix import Matrix
 
 
 class SimpleGiftManager(IGiftManager):
@@ -20,3 +21,21 @@ def mock_gift_manager(gifts_amount: int) -> IGiftManager:
     return SimpleGiftManager([
         (index, (1 / (1 + index), 1)) for index in range(gifts_amount)
     ])
+
+
+def mock_simple_population() -> Tuple[Population, IGiftManager]:
+    gift_manager = SimpleGiftManager([
+        (13, (69.9496, -17.0366)),
+        (5, (-45.1354, 54.6312))
+    ])
+
+    individual_1: Individual = [
+        Matrix([0, 1])
+    ]
+
+    individual_2: Individual = [
+        Matrix([0]),
+        Matrix([1])
+    ]
+
+    return [individual_1, individual_2], gift_manager

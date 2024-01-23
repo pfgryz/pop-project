@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 
 from src.api.igift_manager import IGiftManager
 from src.constants import Gift
-from src.impl.generation import generate_population_single_gift, \
-    generate_population_uniform, generate_population_gaussian
+from src.impl.generation import single_gift_generation, \
+    uniform_generation, gaussian_generation
 from tests.impl.common import mock_gift_manager
 
 GIFTS = 10000
 
 
 def test_single():
-    population = generate_population_single_gift(GIFTS,
-                                                 mock_gift_manager(
+    population = single_gift_generation(GIFTS,
+                                        mock_gift_manager(
                                                      GIFTS))
 
     x = list(range(GIFTS))
@@ -35,7 +35,7 @@ def test_single():
 
 
 def test_uniform():
-    population = generate_population_uniform(100, mock_gift_manager(
+    population = uniform_generation(100, mock_gift_manager(
         GIFTS))
 
     x = list(range(GIFTS // 50))
@@ -60,7 +60,7 @@ def test_uniform():
 
 
 def test_gauss():
-    population = generate_population_gaussian(100, mock_gift_manager(
+    population = gaussian_generation(100, mock_gift_manager(
         GIFTS))
 
     x = list(range(GIFTS // 50))

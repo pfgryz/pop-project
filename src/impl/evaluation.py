@@ -10,7 +10,7 @@ def weighted_reindeer_weariness(sleigh: Sleigh, gift_manager: IGiftManager):
     if len(sleigh) == 0:
         return 0
 
-    for position, gift in sleigh:
+    for position, gift in enumerate(sleigh):
         # Choose starting point
         if result == 0:
             start_point = NorthPole
@@ -23,7 +23,7 @@ def weighted_reindeer_weariness(sleigh: Sleigh, gift_manager: IGiftManager):
 
         # Calculate weight
         cumulative_weight = BaseWeight
-        for _, gift_to_move in sleigh[position:]:
+        for gift_to_move in sleigh[position:]:
             weight, _ = gift_manager.get_gift(gift_to_move)
             cumulative_weight += weight
 
@@ -39,7 +39,7 @@ def weighted_reindeer_weariness(sleigh: Sleigh, gift_manager: IGiftManager):
     return result
 
 
-def cumulative_weighted_reindeer_weariness(sleighs: Individual,
+def cumulative_weighted_reindeer_weariness(individual: Individual,
                                            gift_manager: IGiftManager) -> float:
     return sum(weighted_reindeer_weariness(sleigh, gift_manager) for sleigh in
-               sleighs)
+               individual)
