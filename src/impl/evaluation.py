@@ -1,7 +1,5 @@
-from typing import List
-
-from src.constants import Sleigh, NorthPole, BaseWeight
-from src.helpers import haversine
+from src.constants import Sleigh, NorthPole, BaseWeight, Individual
+from src.utils import haversine
 from src.api.igift_manager import IGiftManager
 
 
@@ -41,7 +39,7 @@ def weighted_reindeer_weariness(sleigh: Sleigh, gift_manager: IGiftManager):
     return result
 
 
-def cumulative_weighted_reindeer_weariness(sleighs: List[Sleigh],
+def cumulative_weighted_reindeer_weariness(sleighs: Individual,
                                            gift_manager: IGiftManager) -> float:
     return sum(weighted_reindeer_weariness(sleigh, gift_manager) for sleigh in
                sleighs)

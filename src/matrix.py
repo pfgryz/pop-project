@@ -1,15 +1,15 @@
 from typing import TypeVar, List, Tuple
 
-SparseMatrixPosition = int
-SparseMatrixElement = TypeVar("SparseMatrixElement")
-SparseMatrix = List[Tuple[SparseMatrixPosition, SparseMatrixElement]]
+MatrixPosition = int
+MatrixElement = TypeVar("MatrixElement")
+SparseMatrix = List[Tuple[MatrixPosition, MatrixElement]]
 
 
-class SparseMatrixHelpers:
+class MatrixHelpers:
 
     @staticmethod
-    def add(matrix: SparseMatrix[SparseMatrixElement],
-            value: SparseMatrixElement) -> SparseMatrix[SparseMatrixElement]:
+    def add(matrix: SparseMatrix[MatrixElement],
+            value: MatrixElement) -> SparseMatrix[MatrixElement]:
         """
         Adds element to sparse matrix. Works on original object
 
@@ -22,8 +22,8 @@ class SparseMatrixHelpers:
         return matrix
 
     @staticmethod
-    def remove(matrix: SparseMatrix[SparseMatrixElement], position: int) -> \
-            SparseMatrix[SparseMatrixElement]:
+    def remove(matrix: SparseMatrix[MatrixElement], position: int) -> \
+            SparseMatrix[MatrixElement]:
         """
         Removes element from sparse matrix. Works on original object
 
@@ -41,7 +41,7 @@ class SparseMatrixHelpers:
         return matrix
 
     @staticmethod
-    def validate(matrix: SparseMatrix[SparseMatrixElement]) -> bool:
+    def validate(matrix: SparseMatrix[MatrixElement]) -> bool:
         """
         Checks if sparse matrix is valid
 
@@ -58,8 +58,8 @@ class SparseMatrixHelpers:
         return True
 
     @staticmethod
-    def sort(matrix: SparseMatrix[SparseMatrixElement]) -> \
-            SparseMatrix[SparseMatrixElement]:
+    def sort(matrix: SparseMatrix[MatrixElement]) -> \
+            SparseMatrix[MatrixElement]:
         """
         Sorts sparse matrix. Works on original object
 

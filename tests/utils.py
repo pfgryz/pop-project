@@ -1,4 +1,4 @@
-from src.helpers import Point, haversine
+from src.utils import Point, haversine
 from src.constants import NorthPole
 import pytest
 from pytest import approx

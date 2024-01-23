@@ -1,15 +1,14 @@
 from math import floor
 from random import choice, randint, uniform, gauss
-from typing import List
 
 from src.api.igift_manager import IGiftManager
-from src.constants import Population, Sleigh
-from src.sparse_matrix import SparseMatrixHelpers
+from src.constants import Individual, Sleigh
+from src.matrix import MatrixHelpers
 
 
 def generate_population_single_gift(population_size: int,
-                                    gift_manager: IGiftManager) -> Population:
-    population: Population = []
+                                    gift_manager: IGiftManager) -> Individual:
+    population: Individual = []
     gifts = list(range(gift_manager.get_count()))
 
     for index in range(gift_manager.get_count()):
@@ -22,8 +21,8 @@ def generate_population_single_gift(population_size: int,
 
 
 def generate_population_uniform(population_size: int,
-                                gift_manager: IGiftManager) -> Population:
-    population: Population = []
+                                gift_manager: IGiftManager) -> Individual:
+    population: Individual = []
     gifts = list(range(gift_manager.get_count()))
 
     for index in range(population_size):
@@ -34,14 +33,14 @@ def generate_population_uniform(population_size: int,
         gift = gifts.pop()
         sleigh_id = floor(uniform(0, population_size))
 
-        SparseMatrixHelpers.add(population[sleigh_id], gift)
+        MatrixHelpers.add(population[sleigh_id], gift)
 
     return population
 
 
 def generate_population_gaussian(population_size: int,
-                                  gift_manager: IGiftManager) -> Population:
-    population: Population = []
+                                 gift_manager: IGiftManager) -> Individual:
+    population: Individual = []
     gifts = list(range(gift_manager.get_count()))
 
     for index in range(population_size):
@@ -55,6 +54,6 @@ def generate_population_gaussian(population_size: int,
         while sleigh_id < 0 or sleigh_id >= population_size:
             sleigh_id = floor(gauss(population_size / 2, population_size / 4))
 
-        SparseMatrixHelpers.add(population[sleigh_id], gift)
+        MatrixHelpers.add(population[sleigh_id], gift)
 
     return population

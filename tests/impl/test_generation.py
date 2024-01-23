@@ -5,26 +5,9 @@ from src.api.igift_manager import IGiftManager
 from src.constants import Gift
 from src.impl.generation import generate_population_single_gift, \
     generate_population_uniform, generate_population_gaussian
+from tests.impl.common import mock_gift_manager
 
 GIFTS = 10000
-
-
-class SimpleGiftManager(IGiftManager):
-
-    def __init__(self, gifts: List[Gift]):
-        self.gifts = gifts
-
-    def get_gift(self, index: int) -> Gift:
-        return self.gifts[index]
-
-    def get_count(self) -> int:
-        return len(self.gifts)
-
-
-def mock_gift_manager(gifts_amount: int) -> IGiftManager:
-    return SimpleGiftManager([
-        (index, (1, 1)) for index in range(gifts_amount)
-    ])
 
 
 def test_single():

@@ -1,7 +1,7 @@
 from typing import List, Tuple, Callable, TypeVar
 
-from src.helpers import Point
-from src.sparse_matrix import SparseMatrix
+from src.utils import Point
+from src.matrix import SparseMatrix
 
 # Constants
 NorthPole: Point = (90, 0)
@@ -13,4 +13,5 @@ Gift = Tuple[Weight, Point]
 
 GiftId = int
 Sleigh = SparseMatrix[GiftId]
-Population = List[Sleigh]
+Individual = List[Sleigh]
+Population = List[Individual]
