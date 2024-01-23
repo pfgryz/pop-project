@@ -3,7 +3,7 @@ from random import choice, randint, uniform, gauss
 
 from src.api.igift_manager import IGiftManager
 from src.constants import Individual, Sleigh
-from src.matrix import MatrixHelpers
+from src.matrix import Matrix
 
 
 def generate_population_single_gift(population_size: int,
@@ -14,7 +14,7 @@ def generate_population_single_gift(population_size: int,
     for index in range(gift_manager.get_count()):
         gift = choice(gifts)
         gifts.remove(gift)
-        sleigh: Sleigh = [(0, gift)]
+        sleigh: Sleigh = Matrix([gift])
         population.append(sleigh)
 
     return population
@@ -26,14 +26,14 @@ def generate_population_uniform(population_size: int,
     gifts = list(range(gift_manager.get_count()))
 
     for index in range(population_size):
-        sleigh: Sleigh = []
+        sleigh: Sleigh = Matrix([])
         population.append(sleigh)
 
     while len(gifts) > 0:
         gift = gifts.pop()
         sleigh_id = floor(uniform(0, population_size))
 
-        MatrixHelpers.add(population[sleigh_id], gift)
+        population[sleigh_id].add(gift)
 
     return population
 
@@ -44,7 +44,7 @@ def generate_population_gaussian(population_size: int,
     gifts = list(range(gift_manager.get_count()))
 
     for index in range(population_size):
-        sleigh: Sleigh = []
+        sleigh: Sleigh = Matrix([])
         population.append(sleigh)
 
     while len(gifts) > 0:
@@ -54,6 +54,6 @@ def generate_population_gaussian(population_size: int,
         while sleigh_id < 0 or sleigh_id >= population_size:
             sleigh_id = floor(gauss(population_size / 2, population_size / 4))
 
-        MatrixHelpers.add(population[sleigh_id], gift)
+        population[sleigh_id].add(gift)
 
     return population

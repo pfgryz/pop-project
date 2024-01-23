@@ -1,70 +1,52 @@
-from typing import TypeVar, List, Tuple
+from typing import TypeVar, List, Tuple, Generic
 
-MatrixPosition = int
-MatrixElement = TypeVar("MatrixElement")
-SparseMatrix = List[Tuple[MatrixPosition, MatrixElement]]
+T = TypeVar("T")
 
 
-class MatrixHelpers:
+class Matrix(Generic[T]):
 
-    @staticmethod
-    def add(matrix: SparseMatrix[MatrixElement],
-            value: MatrixElement) -> SparseMatrix[MatrixElement]:
-        """
-        Adds element to sparse matrix. Works on original object
+    def __init__(self, content: [] = None):
+        self._content = []
 
-        :param matrix: SparseMatrix
-        :param value: Value to add
-        :return: Same matrix
-        """
-        count = len(matrix)
-        matrix.append((count, value))
-        return matrix
+        if content is not None:
+            for element in content:
+                self.add(element)
 
-    @staticmethod
-    def remove(matrix: SparseMatrix[MatrixElement], position: int) -> \
-            SparseMatrix[MatrixElement]:
-        """
-        Removes element from sparse matrix. Works on original object
+    def __len__(self):
+        return len(self._content)
 
-        :param matrix: SparseMatrix
-        :param position: Position
-        :return: Same matrix
-        """
-        matrix.pop(position)
+    def __getitem__(self, item: int):
+        return self._content[item]
 
-        count = len(matrix)
+    def add(self, value: T) -> 'Matrix':
+        count = len(self._content)
+        self._content.append((count, value))
+        return self
+
+    def remove(self, position: int) -> 'Matrix':
+        if position >= len(self._content) or position < 0:
+            raise IndexError("Index out of range")
+
+        self._content.pop(position)
+
+        count = len(self._content)
         for index in range(position, count):
-            _, value = matrix[index]
-            matrix[index] = (index, value)
+            _, value = self._content[index]
+            self._content[index] = (index, value)
 
-        return matrix
+        return self
 
-    @staticmethod
-    def validate(matrix: SparseMatrix[MatrixElement]) -> bool:
-        """
-        Checks if sparse matrix is valid
+    def validate(self) -> bool:
+        count = len(self._content)
 
-        :param matrix: SparseMatrix
-        :return: Is matrix valid
-        """
-        count = len(matrix)
         for index in range(count):
-            position, _ = matrix[index]
+            position, _ = self._content[index]
 
             if position != index:
                 return False
 
         return True
 
-    @staticmethod
-    def sort(matrix: SparseMatrix[MatrixElement]) -> \
-            SparseMatrix[MatrixElement]:
-        """
-        Sorts sparse matrix. Works on original object
-
-        :param matrix: Matrix to sort
-        :return: Same matrix
-        """
-        matrix.sort(key=lambda item: item[0])
-        return matrix
+    def sort(self) -> 'Matrix':
+        self._content.sort(key=lambda item: item[0])
+        return self

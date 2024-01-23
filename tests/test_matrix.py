@@ -1,10 +1,9 @@
-from src.matrix import SparseMatrix, MatrixHelpers
+from src.matrix import Matrix
 
 
 def test_add_to_empty_sparse_matrix():
-    matrix: SparseMatrix[int] = []
-
-    MatrixHelpers.add(matrix, 3)
+    matrix = Matrix([])
+    matrix.add(3)
 
     assert len(matrix) == 1
     assert matrix[0][0] == 0
@@ -12,9 +11,8 @@ def test_add_to_empty_sparse_matrix():
 
 
 def test_add_to_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (1, "b")]
-
-    MatrixHelpers.add(matrix, "c")
+    matrix = Matrix(["a", "b"])
+    matrix.add("c")
 
     assert len(matrix) == 3
     assert matrix[1][1] == "b"
@@ -22,42 +20,44 @@ def test_add_to_sparse_matrix():
 
 
 def test_remove_from_end_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (1, "b"), (2, "c")]
-
-    MatrixHelpers.remove(matrix, 2)
+    matrix = Matrix(["a", "b", "c"])
+    matrix.remove(2)
 
     assert len(matrix) == 2
     assert matrix[1][1] == "b"
 
 
 def test_remove_from_middle_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (1, "b"), (2, "c")]
-
-    MatrixHelpers.remove(matrix, 1)
+    matrix = Matrix(["a", "b", "c"])
+    matrix.remove(1)
 
     assert len(matrix) == 2
     assert matrix[1][1] == "c"
 
 
 def test_validate_good_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (1, "b"), (2, "c")]
+    matrix = Matrix(["a", "b", "c"])
 
-    assert MatrixHelpers.validate(matrix)
+    assert matrix.validate()
 
 
 def test_validate_invalid_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (2, "b"), (1, "c")]
+    matrix = Matrix(["a", "b", "c"])
+    matrix._content[1] = (2, "b")
+    matrix._content[2] = (1, "c")
 
-    assert not MatrixHelpers.validate(matrix)
+    assert not matrix.validate()
 
 
 def test_sort_sparse_matrix():
-    matrix: SparseMatrix[str] = [(0, "a"), (2, "b"), (1, "c")]
+    matrix = Matrix(["a", "b", "c"])
+    matrix._content[1] = (2, "b")
+    matrix._content[2] = (1, "c")
 
     assert matrix[1][1] == "b"
-    assert not MatrixHelpers.validate(matrix)
+    assert not matrix.validate()
 
-    MatrixHelpers.sort(matrix)
+    matrix.sort()
 
     assert matrix[1][1] == "c"
-    assert MatrixHelpers.validate(matrix)
+    assert matrix.validate()
