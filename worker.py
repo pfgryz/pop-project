@@ -4,18 +4,18 @@ import random
 import time
 
 from src.api.generics import Mutation, Generation
+from src.data import GiftManager
 from src.evolutionary import evolutionary_algorithm
 from src.impl.evaluation import cumulative_weighted_reindeer_weariness
 from src.impl.generation import gaussian_generation, single_gift_generation, \
     uniform_generation
 from src.impl.mutation import random_gift_mutation, last_gift_mutation
 from src.impl.selection import tournament_selection
-from tests.impl.common import mock_gift_manager
 
 
 def main(name: str, generation: Generation, mutation: Mutation,
          mutation_probability: float,
-         mutation_count: int):
+         mutation_count: int, iterations: int, seed: int):
     log_format = logging.Formatter("%(message)s")
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
@@ -28,14 +28,13 @@ def main(name: str, generation: Generation, mutation: Mutation,
     file_handler.setFormatter(log_format)
     root_logger.addHandler(file_handler)
 
-    # region Config
-    seed = 100
-    GIFTS = 1000
     s = time.time()
-    random.seed(seed)
-    gm = mock_gift_manager(GIFTS)
-
     root_logger.info("BEGIN_EXPERIMENT")
+
+    # region Config
+
+    random.seed(seed)
+    gm = GiftManager.create_from_file("data/gifts1000.csv")
 
     # endregion
 
@@ -49,7 +48,7 @@ def main(name: str, generation: Generation, mutation: Mutation,
         mutation,
         35,
         10,
-        1000,
+        iterations,
         mutation_count=mutation_count,
         mutation_probability=mutation_probability
     )
@@ -81,11 +80,14 @@ if __name__ == "__main__":
                         default=1.0, help="Probability of mutating")
     parser.add_argument("--mutation_count", type=int, default=1,
                         help="Count of mutations")
+    parser.add_argument("--iterations", type=int, default=1000,
+                        help="Number of iterations")
+    parser.add_argument("--seed", type=int, default=100, help="Random seed")
 
     args = parser.parse_args()
 
     print(args.name, args.generation, args.mutation, args.mutation_probability,
-          args.mutation_count)
+          args.mutation_count, args.iterations, args.seed)
 
     main(
         args.name,
@@ -95,5 +97,7 @@ if __name__ == "__main__":
         ),
         random_gift_mutation if args.mutation == "random" else last_gift_mutation,
         args.mutation_probability,
-        args.mutation_count
+        args.mutation_count,
+        args.iterations,
+        args.seed
     )
