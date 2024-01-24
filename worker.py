@@ -15,7 +15,8 @@ from src.impl.selection import tournament_selection
 
 def main(name: str, generation: Generation, mutation: Mutation,
          mutation_probability: float,
-         mutation_count: int, iterations: int, seed: int):
+         mutation_count: int, iterations: int, seed: int, dataset: str,
+         population_size: int, individual_size: int):
     log_format = logging.Formatter("%(message)s")
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
@@ -29,12 +30,12 @@ def main(name: str, generation: Generation, mutation: Mutation,
     root_logger.addHandler(file_handler)
 
     s = time.time()
-    root_logger.info("BEGIN_EXPERIMENT")
 
     # region Config
 
     random.seed(seed)
-    gm = GiftManager.create_from_file("data/gifts1000.csv")
+    gm = GiftManager.create_from_file(f"data/{dataset}")
+    root_logger.info("BEGIN_EXPERIMENT")
 
     # endregion
 
@@ -46,8 +47,8 @@ def main(name: str, generation: Generation, mutation: Mutation,
         cumulative_weighted_reindeer_weariness,
         tournament_selection,
         mutation,
-        35,
-        10,
+        individual_size,
+        population_size,
         iterations,
         mutation_count=mutation_count,
         mutation_probability=mutation_probability
@@ -83,6 +84,13 @@ if __name__ == "__main__":
     parser.add_argument("--iterations", type=int, default=1000,
                         help="Number of iterations")
     parser.add_argument("--seed", type=int, default=100, help="Random seed")
+    parser.add_argument("--dataset", type=str,
+                        choices=["1000", "10000", "25000"], default="1000",
+                        help="Dataset")
+    parser.add_argument("--population_size", type=int, default=10,
+                        help="Population size")
+    parser.add_argument("--individual_size", type=int, default=35,
+                        help="Individual size")
 
     args = parser.parse_args()
 
@@ -99,5 +107,8 @@ if __name__ == "__main__":
         args.mutation_probability,
         args.mutation_count,
         args.iterations,
-        args.seed
+        args.seed,
+        f"gifts{args.dataset}.csv",
+        args.population_size,
+        args.individual_size
     )
