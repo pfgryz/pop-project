@@ -10,7 +10,7 @@ def test_last_gift_mutation_first():
     _, individual_2 = population
 
     seed(100)
-    result = last_gift_mutation(individual_2, 0.2)
+    result = last_gift_mutation(individual_2, 0.2, gift_manager)
 
     assert len(result[0]) == 0
     assert len(result[1]) == 2
@@ -22,7 +22,7 @@ def test_last_gift_mutation_second():
     _, individual_2 = population
 
     seed(120)
-    result = last_gift_mutation(individual_2, 0.6)
+    result = last_gift_mutation(individual_2, 0.6, gift_manager)
 
     assert len(result[0]) == 2
     assert len(result[1]) == 0
@@ -34,7 +34,7 @@ def test_last_gift_mutation_not_mutated():
     _, individual_2 = population
 
     seed(100)
-    result = last_gift_mutation(individual_2, 0.1)
+    result = last_gift_mutation(individual_2, 0.1, gift_manager)
 
     assert len(result[0]) == 1
     assert len(result[1]) == 1
@@ -46,7 +46,7 @@ def test_random_gift_mutation():
     _, individual_2 = population
 
     seed(100)
-    result = random_gift_mutation(individual_2, 0.2)
+    result = random_gift_mutation(individual_2, 0.2, gift_manager)
 
     assert len(result[0]) == 0
     assert len(result[1]) == 2
@@ -60,7 +60,7 @@ def test_random_gift_mutation_other():
     _, individual_2 = population
 
     seed(120)
-    result = random_gift_mutation(individual_2, 0.6)
+    result = random_gift_mutation(individual_2, 0.6, gift_manager)
 
     assert len(result[0]) == 2
     assert len(result[1]) == 0

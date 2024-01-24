@@ -3,6 +3,7 @@ from typing import List, Tuple
 from src.constants import Gift, Population, Individual
 from src.api.igift_manager import IGiftManager
 from src.matrix import Matrix
+from src.sleigh_matrix import SleighMatrix
 
 
 class SimpleGiftManager(IGiftManager):
@@ -30,12 +31,12 @@ def mock_simple_population() -> Tuple[Population, IGiftManager]:
     ])
 
     individual_1: Individual = [
-        Matrix([0, 1])
+        SleighMatrix([0, 1])
     ]
 
     individual_2: Individual = [
-        Matrix([0]),
-        Matrix([1])
+        SleighMatrix([0]),
+        SleighMatrix([1])
     ]
 
     return [individual_1, individual_2], gift_manager

@@ -1,6 +1,5 @@
-from typing import Tuple
-
 from math import sin, cos, asin, sqrt, radians
+from typing import Tuple
 
 Latitude = float
 Longitude = float
@@ -26,3 +25,17 @@ def haversine(a: Point, b: Point) -> float:
     e: float = 2 * asin(sqrt(d))
 
     return e * EARTH_RADIUS
+
+
+def counter(func):
+    def wrapper(*args, **kwargs):
+        wrapper.counter += 1
+        return func(*args, **kwargs)
+
+    def clear_counter():
+        wrapper.counter = 0
+
+    wrapper.counter = 0
+    wrapper.clear_counter = clear_counter
+
+    return wrapper
