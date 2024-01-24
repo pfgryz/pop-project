@@ -39,7 +39,25 @@ def weighted_reindeer_weariness(sleigh: Sleigh, gift_manager: IGiftManager):
     return result
 
 
+def counter(func):
+    def wrapper(*args, **kwargs):
+        wrapper.counter += 1
+        return func(*args, **kwargs)
+
+    wrapper.counter = 0
+
+    return wrapper
+
+
+# @counter
+# def cumulative_weighted_reindeer_weariness(individual: Individual,
+#                                            gift_manager: IGiftManager) -> float:
+#     return sum(weighted_reindeer_weariness(sleigh, gift_manager) for sleigh in
+#                individual)
+
+
+@counter
 def cumulative_weighted_reindeer_weariness(individual: Individual,
                                            gift_manager: IGiftManager) -> float:
-    return sum(weighted_reindeer_weariness(sleigh, gift_manager) for sleigh in
+    return sum(sleigh.wrw for sleigh in
                individual)

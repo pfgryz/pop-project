@@ -1,7 +1,7 @@
 from typing import List, Tuple, Callable, TypeVar
 
 from src.utils import Point
-from src.matrix import Matrix
+from src.sleigh_matrix import SleighMatrix
 
 # Constants
 NorthPole: Point = (90, 0)
@@ -12,6 +12,6 @@ Weight = float
 Gift = Tuple[Weight, Point]
 
 GiftId = int
-Sleigh = Matrix[GiftId]
+Sleigh = SleighMatrix[GiftId]
 Individual = List[Sleigh]
 Population = List[Individual]

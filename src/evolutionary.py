@@ -15,7 +15,8 @@ def select_best(population: Population, evaluation: Evaluation,
             for individual in population
         ], key=lambda pair: pair[1])
 
-    individual = deepcopy(individual)
+    # individual = deepcopy(individual)
+    individual = [sleigh.copy() for sleigh in individual]
     return individual, rating
 
 
@@ -44,7 +45,7 @@ def evolutionary_algorithm(
 
         for _ in range(population_size):
             individual = selection(population, evaluation, gift_manager)
-            mutated = mutation(individual, 0.5)
+            mutated = mutation(individual, 0.5, gift_manager)
             succession.append(mutated)
 
         log.append(
