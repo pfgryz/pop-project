@@ -56,12 +56,10 @@ def evolutionary_algorithm(
         if best[1] < total_best[1]:
             total_best = best
 
-        log.append(best)
-
         population = succession
 
         t += 1
 
         logger.info(
-            f"{t}/{iterations} {log[-1][1]} {total_best[1]} - {evaluation.counter}"
+            f"{t}/{iterations} {best[1]} {total_best[1]} - {evaluation.counter}"
         )
