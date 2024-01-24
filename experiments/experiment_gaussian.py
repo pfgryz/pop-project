@@ -45,7 +45,8 @@ def main():
         35,
         10,
         1000,
-        mutation_count=5
+        mutation_count=10,
+        mutation_probability=1
     )
 
     # endregion

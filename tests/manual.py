@@ -28,9 +28,6 @@ if __name__ == "__main__":
     print((e - s))
     print(cumulative_weighted_reindeer_weariness.counter)
 
-# @todo: EKSPERYMENTY (WYKONANIE)
-# @todo: Eksperymenty 2 x 3 (2 warianty x 3 metody generowania populacji)
-
 # @todo: EKSPERYMENTY (PRZETWARZANIE)
 # @todo: wygenerować krzywe zbieżności
 # @todo: wygenerować krzywe ECDF (ustalić arbitralny próg)
