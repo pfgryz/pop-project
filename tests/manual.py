@@ -28,25 +28,12 @@ if __name__ == "__main__":
     print((e - s))
     print(cumulative_weighted_reindeer_weariness.counter)
 
-# @todo: WYTWARZANIE
-# @todo: przeprowadzić dalsze profilowanie
-
-# @todo: EKSPERYMENTY (FRAMEWORK)
-# @todo: przygotować zestaw uruchamiający eksperymenty i zapisujące dane
-# @todo:    przydatne do łatwego przetwarzania
-# @todo:    format [iteracja - best_in_iter - best_global - ewaluacje]
-# @todo: ustawić ziarno dla wszystkich eksperymentów
-
 # @todo: EKSPERYMENTY (WYKONANIE)
 # @todo: Eksperymenty 2 x 3 (2 warianty x 3 metody generowania populacji)
 
 # @todo: EKSPERYMENTY (PRZETWARZANIE)
 # @todo: wygenerować krzywe zbieżności
 # @todo: wygenerować krzywe ECDF (ustalić arbitralny próg)
-
-# @todo: UMOŻLIWE USPRAWNIENIA
-# @todo: zamienić prawdopodobieństwo mutacji na skalę mutacji tj. ile
-# @todo:    sań ma być zmutowanych w ramach jednego osobnika - zbyt wolno zbiega
 
 # @todo: WSTĘPNE OBSERWACJE
 # @todo: uniform - losuje na start dość dobry wynik, ale ciężko go poprawić

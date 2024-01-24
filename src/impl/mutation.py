@@ -7,16 +7,16 @@ from src.impl.evaluation import weighted_reindeer_weariness
 
 def last_gift_mutation(individual: Individual,
                        probability: float,
-                       gift_manager: IGiftManager) -> Individual:
-    # result = deepcopy(individual)
+                       gift_manager: IGiftManager,
+                       mutation_count: int) -> Individual:
     result = [sleigh.copy() for sleigh in individual]
-
-    if uniform(0, 1) > probability:
-        return result
 
     counter = 0
 
-    while counter < 1:
+    while counter < mutation_count:
+        if uniform(0, 1) > probability:
+            continue
+
         # Select two sleights
         sleighs = sample(result, k=2)
 
@@ -38,16 +38,16 @@ def last_gift_mutation(individual: Individual,
 
 def random_gift_mutation(individual: Individual,
                          probability: float,
-                         gift_manager: IGiftManager) -> Individual:
-    # result = deepcopy(individual)
+                         gift_manager: IGiftManager,
+                         mutation_count: int) -> Individual:
     result = [sleigh.copy() for sleigh in individual]
-
-    if uniform(0, 1) > probability:
-        return result
 
     counter = 0
 
-    while counter < 1:
+    while counter < mutation_count:
+        if uniform(0, 1) > probability:
+            continue
+
         # Select two sleights
         sleighs = sample(result, k=2)
 
