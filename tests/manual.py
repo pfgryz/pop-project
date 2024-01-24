@@ -20,7 +20,7 @@ if __name__ == "__main__":
         tournament_selection,
         random_gift_mutation,
         30,
-        100,
+        10,
         100
     )
 
@@ -29,10 +29,8 @@ if __name__ == "__main__":
     print(cumulative_weighted_reindeer_weariness.counter)
 
 # @todo: WYTWARZANIE
-# @todo: wprowadzić aktualizowanie się wagi sań
-# @todo: wprowadzić ograniczenie przy mutacjach na wagę sań (<= 1000)
 # @todo: przeprowadzić dalsze profilowanie
-#
+
 # @todo: EKSPERYMENTY (FRAMEWORK)
 # @todo: przygotować zestaw uruchamiający eksperymenty i zapisujące dane
 # @todo:    przydatne do łatwego przetwarzania

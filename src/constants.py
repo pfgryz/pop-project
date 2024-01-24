@@ -6,6 +6,7 @@ from src.sleigh_matrix import SleighMatrix
 # Constants
 NorthPole: Point = (90, 0)
 BaseWeight: float = 10
+MaxWeight: float = 1000
 
 # Domain specific
 Weight = float

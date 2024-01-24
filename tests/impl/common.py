@@ -20,7 +20,7 @@ class SimpleGiftManager(IGiftManager):
 
 def mock_gift_manager(gifts_amount: int) -> IGiftManager:
     return SimpleGiftManager([
-        (index, (1 / (1 + index), 1)) for index in range(gifts_amount)
+        (index * 0.001, (1 / (1 + index), 1)) for index in range(gifts_amount)
     ])
 
 
